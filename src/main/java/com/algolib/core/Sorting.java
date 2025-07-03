@@ -1,6 +1,6 @@
-package com.practice.core;
+package com.algolib.core;
 
-import com.practice.utils.helpers.ArrayHelper;
+import com.algolib.utils.helpers.ArrayHelper;
 
 public class Sorting {
 

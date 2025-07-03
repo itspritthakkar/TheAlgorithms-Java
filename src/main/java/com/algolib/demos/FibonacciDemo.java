@@ -1,6 +1,6 @@
-package com.practice.demos;
+package com.algolib.demos;
 
-import com.practice.core.Fibonacci;
+import com.algolib.core.Fibonacci;
 
 import java.math.BigInteger;
 

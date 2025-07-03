@@ -1,6 +1,6 @@
-package com.practice.demos;
+package com.algolib.demos;
 
-import com.practice.core.BinaryExp;
+import com.algolib.core.BinaryExp;
 
 import java.util.Arrays;
 import java.util.Map;

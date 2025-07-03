@@ -1,11 +1,11 @@
-package com.practice;
+package com.algolib;
 
-import com.practice.demos.Demoable;
-import com.practice.demos.DoublyLinkedListDemo;
-import com.practice.demos.FibonacciDemo;
-import com.practice.demos.BinaryExpDemo;
-import com.practice.demos.SinglyLinkedListDemo;
-import com.practice.demos.SortingDemo;
+import com.algolib.demos.Demoable;
+import com.algolib.demos.DoublyLinkedListDemo;
+import com.algolib.demos.FibonacciDemo;
+import com.algolib.demos.BinaryExpDemo;
+import com.algolib.demos.SinglyLinkedListDemo;
+import com.algolib.demos.SortingDemo;
 
 import java.util.List;
 

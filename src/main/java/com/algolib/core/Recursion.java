@@ -1,4 +1,4 @@
-package com.practice.core;
+package com.algolib.core;
 
 public class Recursion {
 }

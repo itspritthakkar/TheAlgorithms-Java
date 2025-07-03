@@ -1,7 +1,7 @@
-package com.practice.demos;
+package com.algolib.demos;
 
-import com.practice.core.Sorting;
-import com.practice.utils.helpers.ArrayHelper;
+import com.algolib.core.Sorting;
+import com.algolib.utils.helpers.ArrayHelper;
 
 import java.util.function.Function;
 

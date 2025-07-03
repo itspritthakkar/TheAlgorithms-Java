@@ -1,4 +1,4 @@
-package com.practice.demos;
+package com.algolib.demos;
 
 public class RecursionDemo implements Demoable {
     @Override

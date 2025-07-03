@@ -1,6 +1,6 @@
-package com.practice.core;
+package com.algolib.core;
 
-import com.practice.utils.helpers.MatrixHelper;
+import com.algolib.utils.helpers.MatrixHelper;
 
 import java.math.BigInteger;
 

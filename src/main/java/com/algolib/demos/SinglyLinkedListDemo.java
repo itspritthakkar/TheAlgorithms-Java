@@ -1,7 +1,7 @@
-package com.practice.demos;
+package com.algolib.demos;
 
-import com.practice.core.SinglyLinkedList;
-import com.practice.utils.helpers.ArrayHelper;
+import com.algolib.core.SinglyLinkedList;
+import com.algolib.utils.helpers.ArrayHelper;
 
 public class SinglyLinkedListDemo implements Demoable {
 

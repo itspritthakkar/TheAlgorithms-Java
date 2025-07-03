@@ -1,7 +1,6 @@
-package com.practice.demos;
+package com.algolib.demos;
 
-import com.practice.core.DoublyLinkedList;
-import com.practice.core.SinglyLinkedList;
+import com.algolib.core.DoublyLinkedList;
 
 public class DoublyLinkedListDemo implements Demoable{
     @Override

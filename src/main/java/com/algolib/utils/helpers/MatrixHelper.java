@@ -1,4 +1,4 @@
-package com.practice.utils.helpers;
+package com.algolib.utils.helpers;
 
 import java.math.BigInteger;
 
