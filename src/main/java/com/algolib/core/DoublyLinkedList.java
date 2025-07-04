@@ -3,6 +3,7 @@ package com.algolib.core;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 public class DoublyLinkedList<T extends Comparable<T>> {
 
@@ -218,19 +219,19 @@ public class DoublyLinkedList<T extends Comparable<T>> {
         head = reverseGroupHelper(head, k);
 
         // Recalculate tail
-        ListNode<T> temp = head;
-        while (temp.next != null) temp = temp.next;
-        tail = temp;
+        ListNode<T> oldHead = head;
+        while (oldHead.next != null) oldHead = oldHead.next;
+        tail = oldHead;
     }
 
     // Returns new head of the group
     private ListNode<T> reverseGroupHelper(ListNode<T> node, int k) {
-        ListNode<T> curr = node;
+        ListNode<T> current = node;
         int count = 0;
 
         // Check if there are at least k nodes
-        while (curr != null && count < k) {
-            curr = curr.next;
+        while (current != null && count < k) {
+            current = current.next;
             count++;
         }
 
@@ -238,20 +239,20 @@ public class DoublyLinkedList<T extends Comparable<T>> {
 
         // Reverse k nodes
         ListNode<T> prev = null;
-        curr = node;
+        current = node;
 
         for (int i = 0; i < k; i++) {
-            ListNode<T> next = curr.next;
+            ListNode<T> oldNext = current.next;
 
-            curr.next = prev;
-            if (prev != null) prev.prev = curr;
+            current.next = prev;
+            current.prev = oldNext;
 
-            prev = curr;
-            curr = next;
+            prev = current;
+            current = oldNext;
         }
 
         // Recurse on remaining list
-        ListNode<T> newNextHead = reverseGroupHelper(curr, k);
+        ListNode<T> newNextHead = reverseGroupHelper(current, k);
 
         // Connect reversed group to the next group
         node.next = newNextHead;
@@ -263,6 +264,202 @@ public class DoublyLinkedList<T extends Comparable<T>> {
         }
 
         return prev;
+    }
+
+    private ListNode<T> findTheMiddleNodeData(ListNode<T> node) {
+        if (node == null) return null;
+
+        ListNode<T> slow = node;
+        ListNode<T> fast = node.next;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    public void sort() {
+        head = mergeSort(head);
+
+        tail = head;
+        while (tail != null && tail.next != null) {
+            tail = tail.next;
+        }
+    }
+
+    private ListNode<T> mergeSort(ListNode<T> node) {
+        // Base case
+        if (node == null || node.next == null) return node;
+
+        ListNode<T> middle = findTheMiddleNodeData(node);
+        ListNode<T> nextOfMiddle = middle.next;
+        middle.next = null;
+
+        ListNode<T> left = mergeSort(node);
+        ListNode<T> right = mergeSort(nextOfMiddle);
+
+        return mergeTwoSortedLists(left, right);
+    }
+
+    private ListNode<T> mergeTwoSortedLists(ListNode<T> left, ListNode<T> right) {
+        // Dummy node to simplify appending and edge cases
+        ListNode<T> dummy = new ListNode<>(null);
+        ListNode<T> tail = dummy;
+
+        // Merging logic
+        while (left != null && right != null) {
+            if (left.data.compareTo(right.data) <= 0) {
+                tail.next = left;
+                left.prev = tail;
+                left = left.next;
+            } else {
+                tail.next = right;
+                right.prev = tail;
+                right = right.next;
+            }
+            tail = tail.next;
+        }
+
+        // Attach remaining nodes
+        if (left != null) {
+            tail.next = left;
+            left.prev = tail;
+        } else {
+            tail.next = right;
+            right.prev = tail;
+        }
+
+        dummy.next.prev = null;
+        return dummy.next;
+    }
+
+    public void removeDuplicates() {
+        if (head == null) return;
+
+        Set<T> seen = new HashSet<>();
+        ListNode<T> current = head;
+        seen.add(current.data);
+
+        while (current.next != null) {
+            if (seen.contains(current.next.data)) {
+                // Duplicate found → remove it
+                ListNode<T> duplicate = current.next;
+                current.next = duplicate.next;
+
+                if (duplicate.next != null) {
+                    duplicate.next.prev = current;
+                }
+
+                size--;
+            } else {
+                seen.add(current.next.data);
+                current = current.next;
+            }
+        }
+
+        // Update tail
+        tail = current;
+    }
+
+    public void generateCyclicList(int n, int cycleIndex, Function<Integer, T> generator) {
+        if (n <= 0 || cycleIndex < 0 || cycleIndex >= n) {
+            throw new IllegalArgumentException("Invalid size or cycle index");
+        }
+
+        head = null;
+        tail = null;
+        size = 0;
+
+        ListNode<T> cycleNode = null;
+        ListNode<T> prev = null;
+
+        for (int i = 0; i < n; i++) {
+            T value = generator.apply(i);
+            ListNode<T> newNode = new ListNode<>(value);
+
+            if (i == 0) {
+                head = newNode;
+            } else {
+                prev.next = newNode;
+                newNode.prev = prev;
+            }
+
+            if (i == cycleIndex) {
+                cycleNode = newNode;
+            }
+
+            prev = newNode;
+            size++;
+        }
+
+        tail = prev;
+        tail.next = cycleNode;
+        cycleNode.prev = tail;
+    }
+
+    public boolean hasCycle() {
+        if (head == null || head.next == null) {
+            return false;
+        }
+
+        ListNode<T> slow = head;
+        ListNode<T> fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;           // Move 1 step
+            fast = fast.next.next;      // Move 2 steps
+
+            if (slow == fast) {
+                return true;            // Cycle detected
+            }
+        }
+
+        return false;                   // No cycle
+    }
+
+    public T detectStartOfCycle() {
+        if (head == null || head.next == null) {
+            return null;
+        }
+
+        ListNode<T> slow = head;
+        ListNode<T> fast = head;
+        ListNode<T> start = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;           // Move 1 step
+            fast = fast.next.next;      // Move 2 steps
+
+            if (slow == fast) {
+                while (start != slow) {
+                    start = start.next;
+                    slow = slow.next;
+                }
+                return start.data;
+            }
+        }
+
+        return null;
+    }
+
+    public void swap(int index1, int index2) {
+        if (index1 == index2) return;
+
+        // Validate indices
+        if (index1 < 0 || index1 >= size || index2 < 0 || index2 >= size) {
+            throw new IndexOutOfBoundsException("Invalid indices: " + index1 + ", " + index2);
+        }
+
+        // Get nodes at both indices
+        ListNode<T> node1 = getNodeAtIndex(index1);
+        ListNode<T> node2 = getNodeAtIndex(index2);
+
+        // Swap the data
+        T tempData = node1.data;
+        node1.data = node2.data;
+        node2.data = tempData;
     }
 
     public int getSize() {
@@ -293,6 +490,31 @@ public class DoublyLinkedList<T extends Comparable<T>> {
             System.out.println("null");
         } else {
             System.out.println(); // cycle case already handled above
+        }
+
+        System.out.println("List size (logical count): " + getSize());
+    }
+
+    public void printListBackward() {
+        ListNode<T> current = tail;
+        Set<ListNode<T>> visited = new HashSet<>();
+
+        while (current != null) {
+            // Detect cycle
+            if (visited.contains(current)) {
+                System.out.print(current.getData() + " <- (cycle detected here)");
+                break;
+            }
+
+            System.out.print(current.getData() + " <- ");
+            visited.add(current);
+            current = current.prev;
+        }
+
+        if (current == null) {
+            System.out.println("null");
+        } else {
+            System.out.println(); // in case of cycle
         }
 
         System.out.println("List size (logical count): " + getSize());
@@ -352,7 +574,7 @@ public class DoublyLinkedList<T extends Comparable<T>> {
     }
 
     private static class ListNode<T> {
-        private final T data;
+        private T data;
         private ListNode<T> prev;
         private ListNode<T> next;
 

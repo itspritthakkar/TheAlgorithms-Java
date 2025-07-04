@@ -17,6 +17,7 @@ public class SinglyLinkedListDemo implements Demoable {
             sortDemo();
             removeDuplicatesDemo();
             hasCycleDemo();
+            swapDemo();
         } catch (IndexOutOfBoundsException e) {
             System.out.println(e.getMessage());
         }
@@ -75,11 +76,11 @@ public class SinglyLinkedListDemo implements Demoable {
     }
 
     private void reverseInGroupsDemo() {
-        SinglyLinkedList<Integer> sl5 = new SinglyLinkedList<>(new Integer[]{4, 6, 7, 5, 22, 45, 84, 43, 12});
+        SinglyLinkedList<Integer> sl = new SinglyLinkedList<>(new Integer[]{4, 6, 7, 5, 22, 45, 84, 43, 12});
 
-        sl5.reverseInGroups(3);
+        sl.reverseInGroups(3);
 
-        sl5.printList();
+        sl.printList();
     }
 
     private void sortDemo() {
@@ -119,5 +120,16 @@ public class SinglyLinkedListDemo implements Demoable {
         } else {
             System.out.println("The list is not cyclic");
         }
+    }
+
+    private void swapDemo() {
+        SinglyLinkedList<Integer> sl = new SinglyLinkedList<>(ArrayHelper.generateRandomArray(10, 1, 10));
+        System.out.println("Random generated linked list:");
+        sl.printList();
+
+        sl.swap(2, 7);
+
+        System.out.println("List after swap:");
+        sl.printList();
     }
 }

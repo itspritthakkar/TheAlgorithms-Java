@@ -1,15 +1,21 @@
 package com.algolib.demos;
 
 import com.algolib.core.DoublyLinkedList;
+import com.algolib.utils.helpers.ArrayHelper;
 
 public class DoublyLinkedListDemo implements Demoable{
     @Override
     public void start() {
         System.out.println("================= Doubly linked list demo =================");
 
-//        equalityCheckDemo();
-//        crudDemo();
+        equalityCheckDemo();
+        crudDemo();
         reverseDemo();
+        reverseInGroupsDemo();
+        sortDemo();
+        removeDuplicatesDemo();
+        hasCycleDemo();
+        swapDemo();
     }
 
     private void equalityCheckDemo() {
@@ -57,10 +63,69 @@ public class DoublyLinkedListDemo implements Demoable{
     }
 
     private void reverseDemo() {
-        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(new Integer[]{4, 6, 7, 5, 22});
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(new Integer[]{4, 6, 7, 5, 22, 45, 84, 43, 12});
 
         sl.reverseLinkedList();
 
+        sl.printList();
+    }
+
+    private void reverseInGroupsDemo() {
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(new Integer[]{4, 6, 7, 5, 22, 45, 84, 43, 12});
+
+        sl.reverseInGroups(3);
+
+        sl.printList();
+        sl.printListBackward();
+    }
+
+    private void sortDemo() {
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(ArrayHelper.generateRandomArray(10, 1, 50));
+        System.out.println("Random generated linked list:");
+        sl.printList();
+
+        sl.sort();
+
+        System.out.println("Sorted linked list:");
+        sl.printList();
+    }
+
+    private void removeDuplicatesDemo() {
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(ArrayHelper.generateRandomArray(10, 1, 10));
+        System.out.println("Random generated linked list:");
+        sl.printList();
+
+        sl.removeDuplicates();
+
+        System.out.println("Duplicate less list:");
+        sl.printList();
+    }
+
+    private void hasCycleDemo() {
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>();
+
+        sl.generateCyclicList(20, 2, Integer::valueOf);
+
+        sl.printList();
+
+        boolean hasCycle = sl.hasCycle();
+        Integer startPoint = sl.detectStartOfCycle();
+
+        if (hasCycle) {
+            System.out.println("The list is cyclic with starting point: " + startPoint);
+        } else {
+            System.out.println("The list is not cyclic");
+        }
+    }
+
+    private void swapDemo() {
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(ArrayHelper.generateRandomArray(10, 1, 10));
+        System.out.println("Random generated linked list:");
+        sl.printList();
+
+        sl.swap(2, 7);
+
+        System.out.println("List after swap:");
         sl.printList();
     }
 }

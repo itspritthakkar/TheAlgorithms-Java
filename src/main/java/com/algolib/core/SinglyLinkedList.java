@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class SinglyLinkedList <T extends Comparable<T>> {
+
     private ListNode<T> head;
     private ListNode<T> tail;
     private int size;
@@ -252,6 +253,11 @@ public class SinglyLinkedList <T extends Comparable<T>> {
 
     public void sort() {
         head = mergeSort(head);
+
+        tail = head;
+        while (tail != null && tail.next != null) {
+            tail = tail.next;
+        }
     }
 
     private ListNode<T> mergeSort(ListNode<T> node) {
@@ -326,13 +332,13 @@ public class SinglyLinkedList <T extends Comparable<T>> {
         ListNode<T> prev = null;
 
         for (int i = 0; i < n; i++) {
-            T value = generator.apply(i);           // create T instance safely
+            T value = generator.apply(i);
             ListNode<T> newNode = new ListNode<>(value);
 
             if (i == 0) {
                 head = newNode;
             } else {
-                prev.setNext(newNode);
+                prev.next = newNode;
             }
 
             if (i == cycleIndex) {
@@ -344,7 +350,7 @@ public class SinglyLinkedList <T extends Comparable<T>> {
         }
 
         tail = prev;
-        tail.setNext(cycleNode);
+        tail.next = cycleNode;
     }
 
     public boolean hasCycle() {
@@ -390,6 +396,24 @@ public class SinglyLinkedList <T extends Comparable<T>> {
         }
 
         return null;
+    }
+
+    public void swap(int index1, int index2) {
+        if (index1 == index2) return;
+
+        // Validate indices
+        if (index1 < 0 || index1 >= size || index2 < 0 || index2 >= size) {
+            throw new IndexOutOfBoundsException("Invalid indices: " + index1 + ", " + index2);
+        }
+
+        // Get nodes at both indices
+        ListNode<T> node1 = getNodeAtIndex(index1);
+        ListNode<T> node2 = getNodeAtIndex(index2);
+
+        // Swap the data
+        T tempData = node1.data;
+        node1.data = node2.data;
+        node2.data = tempData;
     }
 
     public int getSize() {
@@ -479,7 +503,7 @@ public class SinglyLinkedList <T extends Comparable<T>> {
     }
 
     private static class ListNode <T> {
-        private final T data;
+        private T data;
         private ListNode<T> next;
 
         public ListNode(T data) {
