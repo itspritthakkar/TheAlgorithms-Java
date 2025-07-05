@@ -1,6 +1,6 @@
 package com.algolib.demos;
 
-import com.algolib.core.SinglyLinkedList;
+import com.algolib.core.datastructures.lists.SinglyLinkedList;
 import com.algolib.utils.helpers.ArrayHelper;
 
 public class SinglyLinkedListDemo implements Demoable {

@@ -1,6 +1,6 @@
 package com.algolib.demos;
 
-import com.algolib.core.DoublyLinkedList;
+import com.algolib.core.datastructures.lists.DoublyLinkedList;
 import com.algolib.utils.helpers.ArrayHelper;
 
 public class DoublyLinkedListDemo implements Demoable{
