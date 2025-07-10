@@ -1,6 +1,7 @@
 package com.algolib.core.datastructures.lists;
 
 public abstract class AbstractListNode<T, N extends AbstractListNode<T, N>> {
+
     private T data;
     private N next;
 

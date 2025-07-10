@@ -1,10 +1,12 @@
-package com.algolib.core.datastructures.lists;
+package com.algolib.core.datastructures.stacks;
+
+import com.algolib.core.datastructures.lists.AbstractListNode;
 
 import java.util.Objects;
 
-public class SinglyListNode<T> extends AbstractListNode<T, SinglyListNode<T>> {
+public class StackNode<T> extends AbstractListNode<T, StackNode<T>> {
 
-    public SinglyListNode(T data) {
+    public StackNode(T data) {
         super(data);
     }
 
@@ -13,7 +15,7 @@ public class SinglyListNode<T> extends AbstractListNode<T, SinglyListNode<T>> {
         if (this == obj) return true; // same reference
         if (obj == null || getClass() != obj.getClass()) return false;
 
-        SinglyListNode<?> other = (SinglyListNode<?>) obj;
+        StackNode<?> other = (StackNode<?>) obj;
 
         // Compare the data
         return Objects.equals(this.getData(), other.getData());

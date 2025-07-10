@@ -2,7 +2,7 @@ package com.algolib.core.datastructures.lists;
 
 import java.util.Objects;
 
-public class DoublyListNode<T> extends AbstractListNode<T, DoublyListNode<T>>{
+public class DoublyListNode<T> extends AbstractListNode<T, DoublyListNode<T>> {
 
     private DoublyListNode<T> prev;
 

@@ -1,34 +1,30 @@
-package com.algolib.demos;
+package com.algolib.demos.lists;
 
-import com.algolib.core.datastructures.lists.SinglyLinkedList;
+import com.algolib.core.datastructures.lists.DoublyLinkedList;
+import com.algolib.demos.Demoable;
 import com.algolib.utils.helpers.ArrayHelper;
 
-public class SinglyLinkedListDemo implements Demoable {
-
+public class DoublyLinkedListDemo implements Demoable {
     @Override
     public void start() {
-        try {
-            System.out.println("================= Singly linked list demo =================");
+        System.out.println("================= Doubly linked list demo =================");
 
-            equalityCheckDemo();
-            crudDemo();
-            reverseDemo();
-            reverseInGroupsDemo();
-            sortDemo();
-            removeDuplicatesDemo();
-            hasCycleDemo();
-            swapDemo();
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
-        }
+        equalityCheckDemo();
+        crudDemo();
+        reverseDemo();
+        reverseInGroupsDemo();
+        sortDemo();
+        removeDuplicatesDemo();
+        hasCycleDemo();
+        swapDemo();
     }
 
     private void equalityCheckDemo() {
-        SinglyLinkedList<Integer> sl1 = new SinglyLinkedList<>(1);
+        DoublyLinkedList<Integer> sl1 = new DoublyLinkedList<>(1);
         sl1.add(2);
         sl1.add(3);
 
-        SinglyLinkedList<Integer> sl2 = new SinglyLinkedList<>(1);
+        DoublyLinkedList<Integer> sl2 = new DoublyLinkedList<>(1);
         sl2.add(2);
         sl2.add(3);
 
@@ -45,7 +41,7 @@ public class SinglyLinkedListDemo implements Demoable {
     }
 
     private void crudDemo() {
-        SinglyLinkedList<Integer> sl = new SinglyLinkedList<>(new Integer[]{4, 6, 7});
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(new Integer[]{4, 6, 7});
 
         sl.addToHead(8);
         sl.addAtIndex(3, 12);
@@ -68,7 +64,7 @@ public class SinglyLinkedListDemo implements Demoable {
     }
 
     private void reverseDemo() {
-        SinglyLinkedList<Integer> sl = new SinglyLinkedList<>(new Integer[]{4, 6, 7, 5, 22, 45, 84, 43, 12});
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(new Integer[]{4, 6, 7, 5, 22, 45, 84, 43, 12});
 
         sl.reverseLinkedList();
 
@@ -76,15 +72,16 @@ public class SinglyLinkedListDemo implements Demoable {
     }
 
     private void reverseInGroupsDemo() {
-        SinglyLinkedList<Integer> sl = new SinglyLinkedList<>(new Integer[]{4, 6, 7, 5, 22, 45, 84, 43, 12});
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(new Integer[]{4, 6, 7, 5, 22, 45, 84, 43, 12});
 
         sl.reverseInGroups(3);
 
         sl.printList();
+        sl.printListBackward();
     }
 
     private void sortDemo() {
-        SinglyLinkedList<Integer> sl = new SinglyLinkedList<>(ArrayHelper.generateRandomArray(10, 1, 50));
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(ArrayHelper.generateRandomArray(10, 1, 50));
         System.out.println("Random generated linked list:");
         sl.printList();
 
@@ -95,7 +92,7 @@ public class SinglyLinkedListDemo implements Demoable {
     }
 
     private void removeDuplicatesDemo() {
-        SinglyLinkedList<Integer> sl = new SinglyLinkedList<>(ArrayHelper.generateRandomArray(10, 1, 10));
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(ArrayHelper.generateRandomArray(10, 1, 10));
         System.out.println("Random generated linked list:");
         sl.printList();
 
@@ -106,7 +103,7 @@ public class SinglyLinkedListDemo implements Demoable {
     }
 
     private void hasCycleDemo() {
-        SinglyLinkedList<Integer> sl = new SinglyLinkedList<>();
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>();
 
         sl.generateCyclicList(20, 2, Integer::valueOf);
 
@@ -123,7 +120,7 @@ public class SinglyLinkedListDemo implements Demoable {
     }
 
     private void swapDemo() {
-        SinglyLinkedList<Integer> sl = new SinglyLinkedList<>(ArrayHelper.generateRandomArray(10, 1, 10));
+        DoublyLinkedList<Integer> sl = new DoublyLinkedList<>(ArrayHelper.generateRandomArray(10, 1, 10));
         System.out.println("Random generated linked list:");
         sl.printList();
 

@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public abstract class LinkedList<T extends Comparable<T>, N extends AbstractListNode<T, N>> {
+
     protected N head;
     protected N tail;
     protected int size;
