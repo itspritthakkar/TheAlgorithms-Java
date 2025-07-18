@@ -4,19 +4,40 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
+/**
+ * A stack implementation based on an array list.
+ *
+ * <p>Supports standard stack operations including push, pop, peek, reverse,
+ * and search. Additional utilities like deep copy and conversion to string
+ * are also supported.
+ *
+ * @param <T> the type of elements in this stack
+ */
 public class StackArrayList<T> implements Stack<T> {
 
+    /** Array list to store stack elements */
     private final ArrayList<T> stack;
 
+    /** Constructs an empty stack. */
     public StackArrayList() {
         this.stack = new ArrayList<>();
     }
 
+    /**
+     * Constructs a stack with a single initial element.
+     *
+     * @param data the initial element to push
+     */
     public StackArrayList(T data) {
         this();
         push(data);
     }
 
+    /**
+     * Constructs a stack by pushing all elements from the given array.
+     *
+     * @param dataArray the array of elements to push
+     */
     public StackArrayList(T[] dataArray) {
         this();
         for (T data : dataArray) {
@@ -24,11 +45,22 @@ public class StackArrayList<T> implements Stack<T> {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param data {@inheritDoc}
+     */
     @Override
     public void push(T data) {
         stack.add(data);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return {@inheritDoc}
+     * @throws IllegalStateException {@inheritDoc}
+     */
     @Override
     public T pop() throws IllegalStateException {
         if (isEmpty()) {
@@ -37,6 +69,12 @@ public class StackArrayList<T> implements Stack<T> {
         return stack.removeLast();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return {@inheritDoc}
+     * @throws IllegalStateException {@inheritDoc}
+     */
     @Override
     public T peek() throws IllegalStateException {
         if (isEmpty()) {
@@ -45,36 +83,65 @@ public class StackArrayList<T> implements Stack<T> {
         return stack.getLast();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return {@inheritDoc}
+     */
     @Override
     public boolean isEmpty() {
         return stack.isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return {@inheritDoc}
+     */
     @Override
     public int size() {
         return stack.size();
     }
 
-    @Override
-    public void clear() {
-        stack.clear();
-    }
-
+    /**
+     * {@inheritDoc}
+     *
+     * @param item {@inheritDoc}
+     * @return {@inheritDoc}
+     */
     @Override
     public boolean contains(T item) {
         return stack.contains(item);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void clear() {
+        stack.clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param item {@inheritDoc}
+     * @return {@inheritDoc}
+     */
     @Override
     public int search(T item) {
         return stack.indexOf(item);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void reverse() {
         Collections.reverse(stack);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return {@inheritDoc}
+     */
     public Stack<T> reverseCopy() {
         StackArrayList<T> copy = new StackArrayList<>();
         copy.stack.addAll(stack);
@@ -82,6 +149,11 @@ public class StackArrayList<T> implements Stack<T> {
         return copy;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return {@inheritDoc}
+     */
     @Override
     public Stack<T> copy() {
         StackArrayList<T> copy = new StackArrayList<>();
@@ -89,6 +161,11 @@ public class StackArrayList<T> implements Stack<T> {
         return copy;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return {@inheritDoc}
+     */
     @Override
     public String toString() {
         return stack.toString();

@@ -4,24 +4,49 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
+/**
+ * A concrete implementation of a generic doubly linked list.
+ *
+ * <p>This class extends {@link LinkedList} and uses {@link DoublyListNode} to
+ * maintain forward and backward links. It supports various operations like insertion,
+ * deletion, reversal (entire list or in groups), cycle creation, deduplication, and more.
+ *
+ * @param <T> the type of data stored in the list
+ *
+ * @author Prit Thakkar (pritthakkar111101@gmail.com)
+ */
 public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, DoublyListNode<T>> {
+
+    /** Constructs an empty doubly linked list. */
     public DoublyLinkedList() {
         super();
     }
 
+    /**
+     * Constructs a doubly linked list with a single initial element.
+     *
+     * @param data the initial data
+     */
     public DoublyLinkedList(T data) {
         super(data);
     }
 
+    /**
+     * Constructs a doubly linked list from an array of elements.
+     *
+     * @param dataArray the array of data to populate the list
+     */
     public DoublyLinkedList(T[] dataArray) {
         super(dataArray);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected DoublyListNode<T> createNode(T data) {
         return new DoublyListNode<>(data);
     }
 
+    /** {@inheritDoc} */
     protected DoublyListNode<T> getNodeAtIndex(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
@@ -42,6 +67,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         return node;
     }
 
+    /** {@inheritDoc} */
     public void add(T data) {
         DoublyListNode<T> newNode = new DoublyListNode<>(data);
         if (isEmpty()) {
@@ -54,6 +80,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         size++;
     }
 
+    /** {@inheritDoc} */
     public void addToHead(T data) {
         DoublyListNode<T> newNode = new DoublyListNode<>(data);
         if (isEmpty()) {
@@ -66,6 +93,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         size++;
     }
 
+    /** {@inheritDoc} */
     public void addAtIndex(int index, T data) throws IndexOutOfBoundsException {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Trying to add at an invalid index: " + index);
@@ -106,6 +134,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         size++;
     }
 
+    /** {@inheritDoc} */
     public T deleteHead() {
         if (isEmpty()) {
             System.out.println("List is already empty.");
@@ -126,6 +155,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         return oldHead.getData();
     }
 
+    /** {@inheritDoc} */
     public T deleteTail() {
         if (isEmpty()) {
             System.out.println("List is already empty.");
@@ -148,6 +178,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         return oldTail.getData();
     }
 
+    /** {@inheritDoc} */
     public T deleteAtIndex(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Trying to delete an invalid index: " + index);
@@ -174,6 +205,66 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         }
     }
 
+    /** {@inheritDoc} */
+    public void clear() {
+        DoublyListNode<T> current = head;
+
+        while (current != null) {
+            DoublyListNode<T> next = current.getNext();
+            current.setPrev(null);
+            current.setNext(null);
+            current = next;
+        }
+
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
+    /** {@inheritDoc} */
+    public DoublyLinkedList<T> copy() {
+        DoublyLinkedList<T> cloned = new DoublyLinkedList<>();
+
+        DoublyListNode<T> current = head;
+        while (current != null) {
+            cloned.add(current.getData());
+            current = current.getNext();
+        }
+
+        return cloned;
+    }
+
+    /** Returns a string representation of the list **/
+    @Override
+    public String toString() {
+        if (isEmpty()) {
+            return "empty";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        DoublyListNode<T> current = head;
+        Set<DoublyListNode<T>> visited = new HashSet<>();
+
+        while (current != null) {
+            if (visited.contains(current)) {
+                sb.append(current.getData()).append(" <-> (cycle detected here)");
+                break;
+            }
+
+            sb.append(current.getData());
+
+            visited.add(current);
+            current = current.getNext();
+
+            if (current != null) {
+                sb.append(" <-> ");
+            }
+        }
+
+        return sb.toString();
+    }
+
+    /** {@inheritDoc} */
     public void reverseLinkedList() {
         DoublyListNode<T> current = head;
         DoublyListNode<T> oldPrev = null;
@@ -195,6 +286,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         }
     }
 
+    /** {@inheritDoc} */
     public void reverseInGroups(int k) {
         if (head == null || k <= 1) return;
         head = reverseGroupHelper(head, k);
@@ -247,6 +339,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         return prev;
     }
 
+    /** {@inheritDoc} */
     protected DoublyListNode<T> mergeTwoSortedLists(DoublyListNode<T> left, DoublyListNode<T> right) {
         // Dummy node to simplify appending and edge cases
         DoublyListNode<T> dummy = new DoublyListNode<>(null);
@@ -279,6 +372,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         return dummy.getNext();
     }
 
+    /** {@inheritDoc} */
     public void removeDuplicates() {
         if (head == null) return;
 
@@ -307,6 +401,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         tail = current;
     }
 
+    /** {@inheritDoc} */
     public void generateCyclicList(int n, int cycleIndex, Function<Integer, T> generator) {
         if (n <= 0 || cycleIndex < 0 || cycleIndex >= n) {
             throw new IllegalArgumentException("Invalid size or cycle index");
@@ -345,6 +440,10 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
         }
     }
 
+    /**
+     * Prints the list in reverse order starting from the tail.
+     * Detects and handles cycles during printing.
+     */
     public void printListBackward() {
         DoublyListNode<T> current = tail;
         Set<DoublyListNode<T>> visited = new HashSet<>();

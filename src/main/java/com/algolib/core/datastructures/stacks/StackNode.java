@@ -18,7 +18,8 @@ public class StackNode<T> extends AbstractListNode<T, StackNode<T>> {
         StackNode<?> other = (StackNode<?>) obj;
 
         // Compare the data
-        return Objects.equals(this.getData(), other.getData());
+        return Objects.equals(this.getData(), other.getData()) &&
+                Objects.equals(this.getNext(), other.getNext());
     }
 
     @Override

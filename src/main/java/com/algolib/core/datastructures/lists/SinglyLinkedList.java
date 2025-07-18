@@ -4,25 +4,73 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
+/**
+ * A concrete implementation of a singly linked list.
+ *
+ * <p>Extends the abstract {@link LinkedList} class using {@link SinglyListNode}
+ * for node structure. Provides full support for addition, deletion, reversal,
+ * deduplication, cycle generation, and more.
+ *
+ * @param <T> the type of data stored in the list
+ *
+ * @author Prit Thakkar (pritthakkar111101@gmail.com)
+ */
 public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, SinglyListNode<T>> {
+
+    /**
+     * Constructs an empty singly linked list.
+     */
     public SinglyLinkedList() {
         super();
     }
 
+    /**
+     * Constructs a singly linked list with a single element.
+     *
+     * @param data the data to initialize the list with
+     */
     public SinglyLinkedList(T data) {
         super(data);
     }
 
+    /**
+     * Constructs a singly linked list from an array of data.
+     *
+     * @param dataArray the elements to populate the list
+     */
     public SinglyLinkedList(T[] dataArray) {
         super(dataArray);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected SinglyListNode<T> createNode(T data) {
         return new SinglyListNode<>(data);
     }
 
-    protected SinglyListNode<T> getNodeAtIndex(int index) {
+    /**
+     * Returns the head node of the list.
+     */
+    public SinglyListNode<T> getHead() {
+        return head;
+    }
+
+    /**
+     * Returns the tail node of the list.
+     */
+    public SinglyListNode<T> getTail() {
+        return tail;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param index {@inheritDoc}
+     * @return {@inheritDoc}
+     * @throws IndexOutOfBoundsException {@inheritDoc}
+     */
+    @Override
+    protected SinglyListNode<T> getNodeAtIndex(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Invalid index: " + index);
         }
@@ -34,6 +82,17 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
         return node;
     }
 
+    /**
+     * Retrieves the node immediately before the specified index.
+     *
+     * <p>This is useful for operations like insertion or deletion where access
+     * to the previous node is required. For example, to insert at index {@code i},
+     * you typically need to link from {@code i - 1}.
+     *
+     * @param index the index whose previous node is needed (must be > 0 and < size)
+     * @return the node at position {@code index - 1}
+     * @throws IndexOutOfBoundsException if index is ≤ 0 or ≥ size
+     */
     private SinglyListNode<T> getPrevNodeAtIndex(int index) {
         if (index <= 0 || index >= size) {
             throw new IndexOutOfBoundsException("Invalid index for previous node: " + index);
@@ -42,13 +101,24 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
         return getNodeAtIndex(index - 1);
     }
 
+    /**
+     * Retrieves both the current node and its previous node at the specified index.
+     *
+     * <p>This helper is useful for delete or modify operations where both the
+     * node and its predecessor are required in a single traversal step.
+     *
+     * @param index the index of the current node (must be ≥ 1)
+     * @return a {@link NodePair} containing the previous and current nodes
+     * @throws IndexOutOfBoundsException if {@code index - 1} is invalid
+     */
     private NodePair<T> getCurrentAndPrevNodeAtIndex(int index) {
-        SinglyListNode<T> prev = getPrevNodeAtIndex(index-1);
+        SinglyListNode<T> prev = getPrevNodeAtIndex(index - 1);
         SinglyListNode<T> current = prev.getNext();
 
-        return new NodePair<T>(prev, current);
+        return new NodePair<>(prev, current);
     }
 
+    /** {@inheritDoc} */
     public void add(T data) {
         SinglyListNode<T> newNode = new SinglyListNode<>(data);
         if (isEmpty()) {
@@ -60,6 +130,7 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
         size++;
     }
 
+    /** {@inheritDoc} */
     public void addToHead(T data) {
         SinglyListNode<T> newNode = new SinglyListNode<>(data);
         if (isEmpty()) {
@@ -71,6 +142,7 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
         size++;
     }
 
+    /** {@inheritDoc} */
     public void addAtIndex(int index, T data) throws IndexOutOfBoundsException {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Trying to add at an invalid index: " + index);
@@ -78,21 +150,16 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
 
         SinglyListNode<T> newNode = new SinglyListNode<>(data);
 
-        // Insert at head
         if (index == 0) {
             newNode.setNext(head);
             head = newNode;
             if (size == 0) {
-                tail = newNode; // If list was empty
+                tail = newNode;
             }
-        }
-        // Insert at tail
-        else if (index == size) {
+        } else if (index == size) {
             tail.setNext(newNode);
             tail = newNode;
-        }
-        // Insert in the middle
-        else {
+        } else {
             SinglyListNode<T> prev = getPrevNodeAtIndex(index);
             newNode.setNext(prev.getNext());
             prev.setNext(newNode);
@@ -101,35 +168,27 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
         size++;
     }
 
+    /** {@inheritDoc} */
     public T deleteHead() {
-        if (isEmpty()) {
-            System.out.println("List is already empty.");
-            return null;
-        }
+        if (isEmpty()) return null;
 
         SinglyListNode<T> oldHead = head;
         head = head.getNext();
         oldHead.setNext(null);
         size--;
 
-        if (isEmpty()) {
-            // List became empty after deletion
-            tail = null;
-        }
+        if (isEmpty()) tail = null;
 
         return oldHead.getData();
     }
 
+    /** {@inheritDoc} */
     public T deleteTail() {
-        if (isEmpty()) {
-            System.out.println("List is already empty.");
-            return null;
-        }
+        if (isEmpty()) return null;
 
         SinglyListNode<T> oldTail = tail;
 
         if (head == tail) {
-            // Only one element in the list
             head = tail = null;
         } else {
             SinglyListNode<T> prev = head;
@@ -144,30 +203,70 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
         return oldTail.getData();
     }
 
+    /** {@inheritDoc} */
     public T deleteAtIndex(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Trying to delete an invalid index: " + index);
         }
 
-        if (index == 0) {
-            return deleteHead();
-        } else if (index == size - 1) {
-            return deleteTail();
-        } else {
-            NodePair<T> nodePair = getCurrentAndPrevNodeAtIndex(index);
+        if (index == 0) return deleteHead();
+        if (index == size - 1) return deleteTail();
 
-            SinglyListNode<T> prev = nodePair.getPrev();
-            SinglyListNode<T> nodeToDelete = nodePair.getCurrent();
+        NodePair<T> nodePair = getCurrentAndPrevNodeAtIndex(index);
+        SinglyListNode<T> prev = nodePair.getPrev();
+        SinglyListNode<T> nodeToDelete = nodePair.getCurrent();
 
-            prev.setNext(nodeToDelete.getNext());
-            nodeToDelete.setNext(null);
+        prev.setNext(nodeToDelete.getNext());
+        nodeToDelete.setNext(null);
+        size--;
 
-            size--;
-
-            return nodeToDelete.getData();
-        }
+        return nodeToDelete.getData();
     }
 
+    /** {@inheritDoc} */
+    public void clear() {
+        SinglyListNode<T> current = head;
+        while (current != null) {
+            SinglyListNode<T> next = current.getNext();
+            current.setNext(null);
+            current = next;
+        }
+
+        head = tail = null;
+        size = 0;
+    }
+
+    /** {@inheritDoc} */
+    public SinglyLinkedList<T> copy() {
+        SinglyLinkedList<T> cloned = new SinglyLinkedList<>();
+        SinglyListNode<T> current = head;
+
+        while (current != null) {
+            cloned.add(current.getData());
+            current = current.getNext();
+        }
+
+        return cloned;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String toString() {
+        if (isEmpty()) return "";
+
+        StringBuilder sb = new StringBuilder();
+        SinglyListNode<T> current = head;
+
+        while (current != null) {
+            sb.append(current.getData());
+            if (current.getNext() != null) sb.append(" -> ");
+            current = current.getNext();
+        }
+
+        return sb.toString();
+    }
+
+    /** {@inheritDoc} */
     public void reverseLinkedList() {
         SinglyListNode<T> prev = null;
         SinglyListNode<T> curr = head;
@@ -182,28 +281,26 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
         head = prev;
     }
 
+    /** {@inheritDoc} */
     public void reverseInGroups(int k) {
         if (head == null || k <= 1) return;
-
         head = reverseGroupHelper(head, k);
     }
 
-    // Helper returns new head after reversing a group
     private SinglyListNode<T> reverseGroupHelper(SinglyListNode<T> node, int k) {
         SinglyListNode<T> curr = node;
         int count = 0;
 
-        // Step 1: Check if there are at least k nodes to reverse
         while (curr != null && count < k) {
             curr = curr.getNext();
             count++;
         }
 
-        if (count < k) return node; // Fewer than k nodes, no reversal
+        if (count < k) return node;
 
-        // Step 2: Reverse k nodes
         SinglyListNode<T> prev = null;
         curr = node;
+
         for (int i = 0; i < k; i++) {
             SinglyListNode<T> next = curr.getNext();
             curr.setNext(prev);
@@ -211,19 +308,15 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
             curr = next;
         }
 
-        // Step 3: Recurse for next group and connect
         node.setNext(reverseGroupHelper(curr, k));
-
-        // prev is the new head of this group
         return prev;
     }
 
+    /** {@inheritDoc} */
     protected SinglyListNode<T> mergeTwoSortedLists(SinglyListNode<T> left, SinglyListNode<T> right) {
-        // Dummy node to simplify appending and edge cases
         SinglyListNode<T> dummy = new SinglyListNode<>(null);
         SinglyListNode<T> tail = dummy;
 
-        // Merging logic
         while (left != null && right != null) {
             if (left.getData().compareTo(right.getData()) <= 0) {
                 tail.setNext(left);
@@ -235,12 +328,11 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
             tail = tail.getNext();
         }
 
-        // Attach remaining nodes
         tail.setNext((left != null) ? left : right);
-
         return dummy.getNext();
     }
 
+    /** {@inheritDoc} */
     public void removeDuplicates() {
         if (head == null) return;
 
@@ -250,7 +342,6 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
 
         while (current.getNext() != null) {
             if (seen.contains(current.getNext().getData())) {
-                // Duplicate found → remove it
                 current.setNext(current.getNext().getNext());
                 size--;
             } else {
@@ -259,10 +350,10 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
             }
         }
 
-        // Update tail
         tail = current;
     }
 
+    /** {@inheritDoc} */
     public void generateCyclicList(int n, int cycleIndex, Function<Integer, T> generator) {
         if (n <= 0 || cycleIndex < 0 || cycleIndex >= n) {
             throw new IllegalArgumentException("Invalid size or cycle index");
@@ -297,7 +388,10 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
         tail.setNext(cycleNode);
     }
 
-    private static class NodePair <T> {
+    /**
+     * Utility class to represent a pair of nodes: previous and current.
+     */
+    private static class NodePair<T> {
         SinglyListNode<T> prev;
         SinglyListNode<T> current;
 
