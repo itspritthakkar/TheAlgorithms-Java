@@ -1,8 +1,6 @@
 package com.algolib.core.datastructures.lists;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -100,7 +98,7 @@ public abstract class LinkedList<T extends Comparable<T>, N extends AbstractList
     public abstract T deleteAtIndex(int index) throws IndexOutOfBoundsException;
 
     /** Reverses the list in-place. */
-    public abstract void reverseLinkedList();
+    public abstract void reverse();
 
     /** Reverses the list in groups of k. */
     public abstract void reverseInGroups(int k);
@@ -357,6 +355,27 @@ public abstract class LinkedList<T extends Comparable<T>, N extends AbstractList
             current = current.getNext();
         }
 
+        return result;
+    }
+
+    /**
+     * Converts the linked list into a {@link java.util.List}.
+     *
+     * <p>This method traverses the linked list from {@code head} to {@code tail}
+     * and collects all elements in order into a new {@link java.util.ArrayList}.
+     * The resulting list is independent of the linked list structure, so further
+     * modifications to either do not affect the other.
+     *
+     * @return a {@link java.util.List} containing all elements of the linked list
+     *         in their natural order
+     */
+    public List<T> toList() {
+        List<T> result = new ArrayList<>(size);
+        N current = head;
+        while (current != null) {
+            result.add(current.getData());
+            current = current.getNext();
+        }
         return result;
     }
 }

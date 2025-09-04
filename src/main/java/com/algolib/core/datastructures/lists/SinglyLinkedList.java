@@ -267,7 +267,7 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
     }
 
     /** {@inheritDoc} */
-    public void reverseLinkedList() {
+    public void reverse() {
         SinglyListNode<T> prev = null;
         SinglyListNode<T> curr = head;
 

@@ -265,7 +265,7 @@ public class DoublyLinkedList<T extends Comparable<T>> extends LinkedList<T, Dou
     }
 
     /** {@inheritDoc} */
-    public void reverseLinkedList() {
+    public void reverse() {
         DoublyListNode<T> current = head;
         DoublyListNode<T> oldPrev = null;
 

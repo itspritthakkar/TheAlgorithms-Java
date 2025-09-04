@@ -1,33 +1,27 @@
 package com.algolib;
 
-import com.algolib.demos.Demoable;
-import com.algolib.demos.lists.DoublyLinkedListDemo;
-import com.algolib.demos.FibonacciDemo;
-import com.algolib.demos.BinaryExpDemo;
-import com.algolib.demos.lists.SinglyLinkedListDemo;
-import com.algolib.demos.SortingDemo;
-import com.algolib.demos.stacks.StackArrayDemo;
-import com.algolib.demos.stacks.StackArrayListDemo;
-import com.algolib.demos.stacks.StackLinkedListDemo;
-
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello and welcome to the algolab!");
+        String welcomeMessage = """
+                ===========================================
+                     Welcome to AlgoLab! 🚀
+                ===========================================
+                
+                This project contains implementations of data structures,
+                algorithms, and their demos/tests.
+                
+                👉 To explore the functionality, run the test suite:
+                   - Using Maven:
+                       mvn test
+                
+                   - Using an IDE (IntelliJ, Eclipse, VS Code):
+                       Navigate to src/test/java and run any test class,
+                       e.g., SinglyLinkedListTest, SortingTest, FibonacciTest.
+                
+                Each demo class has been converted into a proper JUnit test.
+                Running them will showcase the algorithms in action ✔
+                """;
 
-        // Index of all demos to run
-        List<Demoable> demos = List.of(
-                new SinglyLinkedListDemo(),
-                new DoublyLinkedListDemo(),
-                new BinaryExpDemo(),
-                new FibonacciDemo(),
-                new SortingDemo(),
-                new StackLinkedListDemo(),
-                new StackArrayDemo(),
-                new StackArrayListDemo()
-        );
-
-        demos.forEach(Demoable::start);
+        System.out.println(welcomeMessage);
     }
 }

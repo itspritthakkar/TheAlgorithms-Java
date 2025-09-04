@@ -137,7 +137,7 @@ public class QueueLinkedList<T extends Comparable<T>> implements Queue<T> {
      */
     @Override
     public void reverse() {
-        list.reverseLinkedList();
+        list.reverse();
     }
 
     /**
@@ -149,7 +149,7 @@ public class QueueLinkedList<T extends Comparable<T>> implements Queue<T> {
     public Queue<T> reverseCopy() {
         QueueLinkedList<T> clone = new QueueLinkedList<>();
         clone.list = list.copy();
-        clone.list.reverseLinkedList();
+        clone.list.reverse();
 
         return clone;
     }
