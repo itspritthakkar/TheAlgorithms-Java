@@ -1,9 +1,6 @@
 # 🚀 AlgoLib – Data Structures & Algorithms in Java
 
-[![Build Status](https://github.com/itspritthakkar/TheAlgorithms-Java/actions/workflows/maven.yml/badge.svg)](https://github.com/itspritthakkar/TheAlgorithms-Java/actions/workflows/maven.yml)  
-[![Qodana](https://github.com/itspritthakkar/TheAlgorithms-Java/actions/workflows/qodana_code_quality.yml/badge.svg)](https://github.com/itspritthakkar/TheAlgorithms-Java/actions/workflows/qodana_code_quality.yml)  
-[![codecov](https://codecov.io/gh/itspritthakkar/TheAlgorithms-Java/branch/main/graph/badge.svg)](https://codecov.io/gh/itspritthakkar/TheAlgorithms-Java)  
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Build Status](https://github.com/itspritthakkar/TheAlgorithms-Java/actions/workflows/maven.yml/badge.svg)](https://github.com/itspritthakkar/TheAlgorithms-Java/actions/workflows/maven.yml) [![Qodana](https://github.com/itspritthakkar/TheAlgorithms-Java/actions/workflows/qodana_code_quality.yml/badge.svg)](https://github.com/itspritthakkar/TheAlgorithms-Java/actions/workflows/qodana_code_quality.yml) [![codecov](https://codecov.io/gh/itspritthakkar/TheAlgorithms-Java/branch/main/graph/badge.svg)](https://codecov.io/gh/itspritthakkar/TheAlgorithms-Java) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
