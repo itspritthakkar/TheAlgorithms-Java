@@ -101,23 +101,6 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
         return getNodeAtIndex(index - 1);
     }
 
-    /**
-     * Retrieves both the current node and its previous node at the specified index.
-     *
-     * <p>This helper is useful for delete or modify operations where both the
-     * node and its predecessor are required in a single traversal step.
-     *
-     * @param index the index of the current node (must be ≥ 1)
-     * @return a {@link NodePair} containing the previous and current nodes
-     * @throws IndexOutOfBoundsException if {@code index - 1} is invalid
-     */
-    private NodePair<T> getCurrentAndPrevNodeAtIndex(int index) {
-        SinglyListNode<T> prev = getPrevNodeAtIndex(index - 1);
-        SinglyListNode<T> current = prev.getNext();
-
-        return new NodePair<>(prev, current);
-    }
-
     /** {@inheritDoc} */
     public void add(T data) {
         SinglyListNode<T> newNode = new SinglyListNode<>(data);
@@ -212,9 +195,8 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
         if (index == 0) return deleteHead();
         if (index == size - 1) return deleteTail();
 
-        NodePair<T> nodePair = getCurrentAndPrevNodeAtIndex(index);
-        SinglyListNode<T> prev = nodePair.getPrev();
-        SinglyListNode<T> nodeToDelete = nodePair.getCurrent();
+        SinglyListNode<T> prev = getNodeAtIndex(index - 1);
+        SinglyListNode<T> nodeToDelete = prev.getNext();
 
         prev.setNext(nodeToDelete.getNext());
         nodeToDelete.setNext(null);
@@ -386,26 +368,5 @@ public class SinglyLinkedList<T extends Comparable<T>> extends LinkedList<T, Sin
 
         tail = prev;
         tail.setNext(cycleNode);
-    }
-
-    /**
-     * Utility class to represent a pair of nodes: previous and current.
-     */
-    private static class NodePair<T> {
-        SinglyListNode<T> prev;
-        SinglyListNode<T> current;
-
-        NodePair(SinglyListNode<T> prev, SinglyListNode<T> current) {
-            this.prev = prev;
-            this.current = current;
-        }
-
-        public SinglyListNode<T> getPrev() {
-            return prev;
-        }
-
-        public SinglyListNode<T> getCurrent() {
-            return current;
-        }
     }
 }
