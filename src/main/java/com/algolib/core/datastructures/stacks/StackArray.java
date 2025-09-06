@@ -34,16 +34,6 @@ public class StackArray<T> implements Stack<T> {
     }
 
     /**
-     * Constructs a stack with a single initial element.
-     *
-     * @param data the initial element to push
-     */
-    public StackArray(T data) {
-        this(DEFAULT_CAPACITY);
-        push(data);
-    }
-
-    /**
      * Constructs an empty stack of a particular size.
      *
      * @param size the size of the stack
@@ -55,23 +45,6 @@ public class StackArray<T> implements Stack<T> {
         }
         this.maxSize = size;
         this.stackArray = (T[]) new Object[size];
-        this.top = -1;
-    }
-
-    /**
-     * Constructs a stack with a single initial element of a particular size.
-     *
-     * @param data the initial element to push
-     * @param size the size of the stack
-     */
-    @SuppressWarnings("unchecked")
-    public StackArray(T data, int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Stack size must be greater than 0");
-        }
-        this.maxSize = size;
-        this.stackArray = (T[]) new Object[size];
-        push(data);
         this.top = -1;
     }
 

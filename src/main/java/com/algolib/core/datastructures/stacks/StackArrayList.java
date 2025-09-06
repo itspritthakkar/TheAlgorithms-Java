@@ -24,16 +24,6 @@ public class StackArrayList<T> implements Stack<T> {
     }
 
     /**
-     * Constructs a stack with a single initial element.
-     *
-     * @param data the initial element to push
-     */
-    public StackArrayList(T data) {
-        this();
-        push(data);
-    }
-
-    /**
      * Constructs a stack by pushing all elements from the given array.
      *
      * @param dataArray the array of elements to push

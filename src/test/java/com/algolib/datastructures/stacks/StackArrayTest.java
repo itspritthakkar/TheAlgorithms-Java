@@ -5,11 +5,12 @@ import com.algolib.core.datastructures.stacks.StackArray;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class StackArrayTest {
 
     @Test
-    void crudDemo() {
+    void crud() {
         Stack<Integer> sa = new StackArray<>(new Integer[]{1, 2, 3});
 
         // push
@@ -37,7 +38,7 @@ class StackArrayTest {
     }
 
     @Test
-    void reverseDemo() {
+    void reverseAndCopy() {
         Stack<Integer> sa = new StackArray<>(new Integer[]{1, 2, 3, 4});
         Stack<Integer> saOriginal = sa.copy();
 
@@ -49,5 +50,118 @@ class StackArrayTest {
 
         // after reverse, stacks should be equal
         assertThat(sa).isEqualTo(saCopy);
+    }
+
+    @Test
+    void popOnEmptyThrows() {
+        Stack<Integer> sa = new StackArray<>();
+        assertThatThrownBy(sa::pop)
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void peekOnEmptyThrows() {
+        Stack<Integer> sa = new StackArray<>();
+        assertThatThrownBy(sa::peek)
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void constructorWithInvalidSizeThrows() {
+        assertThatThrownBy(() -> new StackArray<>(0))
+                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new StackArray<>(-5))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void sizeAndIsEmptyAndIsFull() {
+        StackArray<Integer> sa = new StackArray<>(2);
+        assertThat(sa.size()).isZero();
+        assertThat(sa.isEmpty()).isTrue();
+        assertThat(sa.isFull()).isFalse();
+
+        sa.push(1);
+        sa.push(2);
+
+        assertThat(sa.size()).isEqualTo(2);
+        assertThat(sa.isEmpty()).isFalse();
+        assertThat(sa.isFull()).isTrue();
+    }
+
+    @Test
+    void triggersResizeWhenFull() {
+        StackArray<Integer> sa = new StackArray<>(2);
+        sa.push(1);
+        sa.push(2);
+        assertThat(sa.isFull()).isTrue();
+
+        // trigger resize
+        sa.push(3);
+
+        assertThat(sa.size()).isEqualTo(3);
+        assertThat(sa.peek()).isEqualTo(3);
+    }
+
+    @Test
+    void toStringWorks() {
+        StackArray<Integer> sa = new StackArray<>(new Integer[]{1, 2, 3});
+        assertThat(sa.toString()).isEqualTo("[1, 2, 3]");
+
+        StackArray<Integer> empty = new StackArray<>();
+        assertThat(empty.toString()).isEqualTo("[]");
+    }
+
+    @Test
+    void equalsAndHashCode() {
+        StackArray<Integer> s1 = new StackArray<>(new Integer[]{1, 2, 3});
+        StackArray<Integer> s2 = new StackArray<>(new Integer[]{1, 2, 3});
+        StackArray<Integer> s3 = new StackArray<>(new Integer[]{1, 2, 4});
+        StackArray<Integer> s4 = new StackArray<>(new Integer[]{1, 2});
+
+        // reflexive
+        assertThat(s1).isEqualTo(s1);
+
+        // symmetric
+        assertThat(s1).isEqualTo(s2);
+        assertThat(s2).isEqualTo(s1);
+        assertThat(s1.hashCode()).isEqualTo(s2.hashCode());
+
+        // different content
+        assertThat(s1).isNotEqualTo(s3);
+
+        // different size
+        assertThat(s1).isNotEqualTo(s4);
+
+        // null and different type
+        assertThat(s1.equals(null)).isFalse();
+        assertThat(s1.equals("not a stack")).isFalse();
+    }
+
+    @Test
+    void defaultConstructorCreatesEmptyStack() {
+        StackArray<Integer> sa = new StackArray<>();
+        assertThat(sa.size()).isZero();
+        assertThat(sa.isEmpty()).isTrue();
+        assertThat(sa.toString()).isEqualTo("[]");
+    }
+
+    @Test
+    void constructorWithCapacityInitializesCorrectly() {
+        StackArray<Integer> sa = new StackArray<>(5);
+        assertThat(sa.size()).isZero();
+        assertThat(sa.isEmpty()).isTrue();
+        assertThat(sa.isFull()).isFalse();
+
+        sa.push(1);
+        assertThat(sa.size()).isEqualTo(1);
+    }
+
+    @Test
+    void constructorWithArrayInitializesCorrectly() {
+        StackArray<Integer> sa = new StackArray<>(new Integer[]{10, 20, 30});
+        assertThat(sa.size()).isEqualTo(3);
+        assertThat(sa.peek()).isEqualTo(30);
+        assertThat(sa.toString()).isEqualTo("[10, 20, 30]");
     }
 }
