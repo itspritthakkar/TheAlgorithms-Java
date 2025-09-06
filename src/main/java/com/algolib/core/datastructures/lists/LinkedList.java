@@ -180,7 +180,7 @@ public abstract class LinkedList<T extends Comparable<T>, N extends AbstractList
             }
             node = node.getNext();
         }
-        return null;
+        return -1;
     }
 
     /**

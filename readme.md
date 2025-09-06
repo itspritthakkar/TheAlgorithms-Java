@@ -6,7 +6,7 @@
 
 ## 📖 About
 AlgoLib is a **Java library for practicing Data Structures and Algorithms (DSA)**.  
-It includes clean implementations, demos, and **JUnit 5 test cases** for:
+It includes clean implementations following SOLID principles, demos, and **JUnit 5 test cases** for:
 
 - ✅ Singly Linked List
 - ✅ Doubly Linked List

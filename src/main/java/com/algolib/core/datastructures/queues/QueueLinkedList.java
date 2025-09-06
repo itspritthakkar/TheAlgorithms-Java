@@ -118,7 +118,7 @@ public class QueueLinkedList<T extends Comparable<T>> implements Queue<T> {
      */
     @Override
     public boolean contains(T item) {
-        return list.getNodeIndexByData(item) != null;
+        return list.getNodeIndexByData(item) != -1;
     }
 
     /**
